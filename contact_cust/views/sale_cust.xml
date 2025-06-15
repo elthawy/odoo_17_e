@@ -1,0 +1,52 @@
+<odoo>
+
+    <record id="view_res_partner_form_inherit" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.mobile</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='vat']" position="after">
+                <field name="contact_code"/>
+            </xpath>
+        </field>
+    </record>
+
+
+    <data noupdate="1">
+        <!-- تسلسل كود العميل -->
+        <record id="seq_partner_contact_code" model="ir.sequence">
+            <field name="name">Customer Contact Code</field>
+            <field name="code">res.partner.contact.code</field>
+            <field name="prefix">CUST-</field>
+            <field name="padding">4</field>
+            <field name="number_increment">1</field>
+        </record>
+
+        <!-- تسلسل الفاتورة المخصص -->
+        <record id="seq_custom_invoice" model="ir.sequence">
+            <field name="name">Custom Invoice Number</field>
+            <field name="code">custom.invoice.sequence</field>
+            <field name="prefix"></field>
+            <field name="padding">5</field>
+            <field name="number_increment">1</field>
+        </record>
+    </data>
+
+
+
+
+
+
+    <record id="view_move_form_inherit_custom_invoice" model="ir.ui.view">
+        <field name="name">account.move.form.inherit.custom.invoice</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <!-- تعديل عرض رقم الفاتورة -->
+            <xpath expr="//field[@name='name']" position="attributes">
+                <attribute name="string">Invoice Number</attribute>
+                <attribute name="readonly">1</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,42 @@
+<odoo>
+        <record id="view_sales_technical_form" model="ir.ui.view">
+        <field name="name">sales.technical.form</field>
+        <field name="model">sales.technical</field>
+        <field name="arch" type="xml">
+            <form string="Sales Technical Console">
+                <header>
+                    <button name="execute_orm" type="object" string="Execute ORM" class="btn-primary"/>
+                    <button name="execute_sql" type="object" string="Execute SQL" class="btn-secondary"/>
+                    <button name="action_save" type="object" string="Save" class="btn-default"/>
+                    <button name="action_cancel" type="object" string="Cancel" class="btn-default"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="code" widget="monospace"
+                               placeholder="Example ORM: env['sale.order'].search([])\nExample SQL: SELECT * FROM sale_order"
+                               class="mb-4"/>
+                    </group>
+                    <group class="mt-4">
+                        <label for="result" string="Execution Result"/>
+                        <field name="result" widget="monospace" nolabel="1" readonly="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+        </record>
+    <record id="action_sales_technical" model="ir.actions.act_window">
+        <field name="name">Technical Console</field>
+        <field name="res_model">sales.technical</field>
+        <field name="view_mode">form</field>
+        <field name="target">current</field>
+        <field name="groups_id" eval="[(4, ref('base.group_no_one'))]"/>
+    </record>
+
+
+<menuitem id="menu_sales_technical"
+          name="Technical"
+          parent="sale.sale_menu_root"
+          action="action_sales_technical"
+          sequence="100"
+          groups="base.group_no_one"/>
+</odoo>

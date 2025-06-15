@@ -1,0 +1,55 @@
+<odoo>
+
+
+    <record id="view_order_form_custom" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit.records</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='mobile_number']" position="after">
+                <field name="records_number" readonly="records_number_readonly"/>
+                <field name="records_number_readonly" invisible="1"/>
+
+            </xpath>
+
+            <xpath expr="//header" position="inside">
+                <button name="action_duplicate_records"
+                        string="Duplicate Records"
+                        type="object"
+                        class="btn-primary"/>
+
+            </xpath>
+
+        </field>
+    </record>
+    <record id="view_sale_report_wizard_form" model="ir.ui.view">
+        <field name="name">sale.report.wizard.form</field>
+        <field name="model">sale.report.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Sales Report Wizard">
+                <group>
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                    <field name="customer_id"/>
+                </group>
+                <footer>
+                    <button string="Print XLSX" type="object" name="action_print_xlsx" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="action_sale_report_wizard" model="ir.actions.act_window">
+        <field name="name">Customer Sales Report</field>
+        <field name="res_model">sale.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+
+    <menuitem id="menu_sale_report_wizard" name="Print Customer Report"
+              parent="sale.sale_order_menu"
+              action="action_sale_report_wizard" sequence="10"/>
+</odoo>

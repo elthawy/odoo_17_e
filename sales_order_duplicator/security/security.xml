@@ -1,0 +1,7 @@
+
+<odoo>
+    <record id="group_restrict_records_number" model="res.groups">
+        <field name="name">Restrict Records Number</field>
+        <field name="category_id" ref="base.module_category_sales_sales"/>
+    </record>
+</odoo>

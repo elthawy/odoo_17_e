@@ -1,0 +1,36 @@
+<odoo>
+    <record id="view_account_move_form_inherit" model="ir.ui.view">
+        <field name="name">account.move.form.inherit.mobile</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_shipping_id']" position="after">
+                <field name="mobile_number_mud"/>
+            </xpath>
+            <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='product_id']"
+                   position="before">
+                <field name="sequence_number" string="م."/>
+            </xpath>
+
+        </field>
+    </record>
+   <template id="your_custom_invoice_report" inherit_id="account.report_invoice_document">
+    <!-- إضافة رأس العمود في الترويسة - التصحيح هنا -->
+    <xpath expr="//table[@name='invoice_line_table']//th[@name='th_description']" position="before">
+        <th class="text-start" name="th_sequence_number">#</th>
+    </xpath>
+
+    <!-- إضافة عمود التسلسل داخل كل صف منتج -->
+    <xpath expr="//table[@name='invoice_line_table']//td[@name='account_invoice_line_name']" position="before">
+        <td class="text-start" name="td_sequence_number">
+            <span t-field="line.sequence_number"/>
+        </td>
+    </xpath>
+        <xpath expr="//div[@id='informations']/div[last()]" position="after">
+        <div t-if="o.partner_id.mobile or o.partner_id.phone" class="col-auto col-3 mw-100 mb-2">
+            <strong><i class="fa fa-mobile mr-1"/> Mobile:</strong><br/>
+            <span t-esc="o.partner_id.mobile or o.partner_id.phone"/>
+        </div>
+    </xpath>
+</template>
+</odoo>
